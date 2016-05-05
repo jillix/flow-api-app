@@ -1,0 +1,96 @@
+{
+    "server": true,
+    "config": {
+        "notDefined": "__404",
+        "routers": {
+            "GET": {
+                "api": {
+                    "users": {
+                        ":username": [
+                            "users.get",
+                            {}
+                        ]
+                    }
+                }
+            },
+            "POST": {
+                "api": {
+                    "users": [
+                        "users.create",
+                        {}
+                    ]
+                }
+            },
+            "PUT": {
+
+            },
+            "DELETE": {
+
+            }
+        }
+    },
+    "flow": {
+        "__404": {
+            "d": [
+                [":flow_tools/transform",
+                    {
+                        "errorBody.code": 404,
+                        "errorBody.message": "Requested resource not found."
+                    }
+                ],
+                [":flow_tools/stringify", ["_", "errorBody"]],
+                [":http_server/send", {
+                    "send": "errorBody",
+                    "statusCode": 404,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ]
+        },
+        "users.get":{
+            "d": [
+                [":flow_tools/transform",
+                    {
+                        "data.username": "{params.username}"
+                    }
+                ],
+                ":service_api/user.get",
+                [":flow_tools/stringify", ["_", "data"]],
+                [":http_server/send", {
+                    "send": "data",
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "users.create": {
+            "d": [
+                [":flow_tools/transform",
+                    {
+                        "errorBody.code": 503,
+                        "errorBody.message": "API method not implemented yet"
+                    }
+                ],
+                [":flow_tools/stringify", ["_", "errorBody"]],
+                [":http_server/send", {
+                    "send": "errorBody",
+                    "statusCode": 503,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ]
+        }
+    },
+    "roles": {
+        "*": true
+    },
+    "module": "flow-router",
+    "name": "_api_router"
+}

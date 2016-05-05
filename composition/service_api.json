@@ -1,0 +1,9 @@
+{
+    "server": true,
+    "name": "service_api",
+    "module": "flow-service-api",
+    "roles": {
+        "*": true
+    },
+    "flow": {}
+}

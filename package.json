@@ -1,0 +1,41 @@
+{
+  "dependencies": {
+    "flow-app": "github:jillix/flow-app",
+    "flow-http": "github:jillix/flow-http",
+    "flow-pack": "github:jillix/flow-pack",
+    "flow-router": "github:jillix/flow-router#multiple_configs",
+    "flow-service-api": "github:jillix/flow-service-api#restful",
+    "flow-tools": "github:jillix/flow-tools",
+    "flow-static": "github:jillix/flow-static"
+  },
+  "name": "service-api-app",
+  "version": "0.1.0",
+  "description": "Service-api micro service",
+  "main": "flow",
+  "scripts": {
+    "prestart": "./scripts/bash/prestart.sh",
+    "start": "flow-app . http_server/start",
+    "debug": "flow-pack -d .; npm run local",
+    "preinstall": "./scripts/bash/preinstall.sh",
+    "watch": "flow-pack -dw .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "npm start --silent",
+    "prelocal": "if [ ! -f ssl/dev.crt -o ! -f ssl/dev.key ]; then echo \"Generate the dev SSL certificates in the ssl directory ...\"; openssl req  -nodes -new -x509 -subj '/C=CH/ST=Zurich/L=Zurich/O=jillix GmbH/CN=jillix.com' -keyout ssl/dev.key -out ssl/dev.crt; fi; "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jillix/service-api-app.git"
+  },
+  "keywords": [
+    "jillix",
+    "service",
+    "api",
+    "flow"
+  ],
+  "author": "jillix <contact@jillix.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jillix/service-api-app/issues"
+  },
+  "homepage": "https://github.com/jillix/service-api-app#readme"
+}

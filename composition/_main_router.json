@@ -1,0 +1,80 @@
+{
+    "server": true,
+    "config": {
+        "notDefined": "__404",
+        "defaultRouter": "mainRouter",
+        "routers": {
+            "mainRouter": {
+                "api": {
+                    ":api_name": ["forwardToApiRouter", {}, "forwardToApiRouter"]
+                },
+                "_m": {
+                    ":name": "module"
+                },
+                "_i": {
+                    ":name": "mic"
+                },
+                "_c": "custom"
+            }
+        }
+    },
+    "flow": {
+        "__404": {
+            "d": [
+                [":flow_tools/transform",
+                    {
+                        "errorBody.code": 404,
+                        "errorBody.message": "Requested resource not found."
+                    }
+                ],
+                [":flow_tools/stringify", ["_", "errorBody"]],
+                [":http_server/send", {
+                    "send": "errorBody",
+                    "statusCode": 404,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ]
+        },
+        "custom": {
+            "d": [
+                [":_main_static/static", {"wd": "app_modules"}]
+            ]
+        },
+        "module": {
+            "d": [
+                [
+                    ":_main_static/static",
+                    {
+                        "wd": ".bundles"
+                    }
+                ]
+            ]
+        },
+        "mic": {
+            "d": [
+                [
+                    ":_main_static/static",
+                    {"wd": "composition"}
+                ]
+            ]
+        },
+        "forwardToApiRouter": {
+            "d": [
+                [":flow_tools/transform",
+                    {
+                        "router": "{req.method}"
+                    }
+                ],
+                ":_api_router/route"
+            ]
+        }
+    },
+    "roles": {
+        "*": true
+    },
+    "module": "flow-router",
+    "name": "_main_router"
+}

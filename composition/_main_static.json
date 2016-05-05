@@ -1,0 +1,9 @@
+{
+    "server": true,
+    "config": {},
+    "roles": {
+        "*": true
+    },
+    "module": "flow-static",
+    "name": "_main_static"
+}

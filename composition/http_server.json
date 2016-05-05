@@ -1,0 +1,36 @@
+{
+    "server": true,
+    "config": {
+        "port": 9000,
+        "session": {},
+        "ssl": {}
+    },
+    "flow": {
+        "start": {
+            "d": [
+                [".start", {
+                    "port": 9000,
+                    "ssl": {
+                        "cert": "/ssl/dev.crt",
+                        "key": "/ssl/dev.key"
+                    }
+                }]
+            ]
+        },
+        "http_req": {
+            "d": [
+                ":_main_router/route"
+            ]
+        },
+        "error": {
+            "d": [
+                [":send", {"end": true, "code": 500}]
+            ]
+        }
+    },
+    "roles": {
+        "*": true
+    },
+    "module": "flow-http",
+    "name": "http_server"
+}

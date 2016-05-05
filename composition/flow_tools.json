@@ -1,0 +1,7 @@
+{
+    "roles": {
+        "*": true
+    },
+    "name": "flow_tools",
+    "module": "flow-tools"
+}
