@@ -8,7 +8,25 @@
                     "users": {
                         ":username": [
                             "users.get",
-                            {}
+                            {
+                                "projects": [
+                                    "projects.list",
+                                    {
+                                        ":project": [
+                                            "projects.get", 
+                                            {
+                                                "apps": [
+                                                    "apps.list",
+                                                    {
+                                                        ":app": ["apps.get", {}]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "apps": ["apps.listAll", {}]
+                            }
                         ]
                     }
                 }
@@ -17,15 +35,70 @@
                 "api": {
                     "users": [
                         "users.create",
-                        {}
+                        {
+                            ":username": [
+                                "users.get",
+                                {
+                                    "emails": ["users.addEmail", {}],
+                                    "projects": [
+                                        "projects.create",
+                                        {
+                                            ":project": {
+                                                "apps": ["apps.create", {}]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
                     ]
                 }
             },
-            "PUT": {
-
+            "PATCH": {
+                "api": {
+                    "users": {
+                        ":username": [
+                            "users.updateCore",
+                            {
+                                "password": "users.updatePassword",
+                                "emails": {
+                                    ":emailId": "users.updateEmail"
+                                },
+                                "projects": {
+                                    ":project": [
+                                        "projects.updateCore",
+                                        {
+                                            "apps": {
+                                                ":app": ["apps.updateCore", {}]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             },
             "DELETE": {
-
+                "api": {
+                    "users": {
+                        ":username": [
+                            "users.delete",
+                            {
+                                "projects": {
+                                    ":project": [
+                                        "projects.delete",
+                                        {
+                                            "apps": {
+                                                ":app": ["apps.delete", {}]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         }
     },
@@ -70,22 +143,376 @@
         },
         "users.create": {
             "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                ":service_api/user.create",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 201,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "users.updateCore": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
                 [":flow_tools/transform",
                     {
-                        "errorBody.code": 503,
-                        "errorBody.message": "API method not implemented yet"
+                        "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
-                [":flow_tools/stringify", ["_", "errorBody"]],
+                ":service_api/user.updateCore",
+                [":flow_tools/stringify", ["_", "body"]],
                 [":http_server/send", {
-                    "send": "errorBody",
-                    "statusCode": 503,
+                    "send": "body",
+                    "statusCode": 204,
                     "end": true,
                     "headers": {
                         "content-type": "application/json"
                     }
                 }]
-            ]
+            ],
+            "r": "http_server/error"
+        },
+        "users.updatePassword": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "userId": "http://service.jillix.com/{params.username}"
+                    }
+                ],
+                ":service_api/user.updatePassword",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 204,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "users.addEmail": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "userId": "http://service.jillix.com/{params.username}"
+                    }
+                ],
+                ":service_api/user.addEmail",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 201,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "users.updateEmail": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "username": "{params.username}",
+                        "emailId": "_:{params.emailId}"
+                    }
+                ],
+                ":service_api/user.updateEmail",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 204,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "users.delete": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "userId": "http://service.jillix.com/{params.username}"
+                    }
+                ],
+                ":service_api/user.delete",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 204,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "projects.create": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "userId": "http://service.jillix.com/{params.username}"
+                    }
+                ],
+                ":service_api/project.create",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 201,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "projects.get": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "projectId": "http://service.jillix.com/{params.username}/{params.project}"
+                    }
+                ],
+                ":service_api/project.get",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 200,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "projects.list": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "userId": "http://service.jillix.com/{params.username}"
+                    }
+                ],
+                ":service_api/project.list",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 200,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "projects.updateCore": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "projectId": "http://service.jillix.com/{params.username}/{params.project}"
+                    }
+                ],
+                ":service_api/project.updateCore",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 204,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "projects.delete": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "projectId": "http://service.jillix.com/{params.username}/{params.project}"
+                    }
+                ],
+                ":service_api/project.delete",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 204,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "apps.create": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "userId": "http://service.jillix.com/{params.username}",
+                        "projectId": "http://service.jillix.com/{params.username}/{params.project}"
+                    }
+                ],
+                ":service_api/app.create",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 201,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "apps.get": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "appId": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
+                    }
+                ],
+                ":service_api/app.get",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 200,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "apps.list": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "userId": "http://service.jillix.com/{params.username}",
+                        "projectId": "http://service.jillix.com/{params.username}/{params.project}"
+                    }
+                ],
+                ":service_api/app.list",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 200,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "apps.listAll": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "userId": "http://service.jillix.com/{params.username}",
+                        "projectId": "http://service.jillix.com/{params.username}/{params.project}"
+                    }
+                ],
+                ":service_api/app.listAll",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 200,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "apps.updateCore": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "appId": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
+                    }
+                ],
+                ":service_api/app.updateCore",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 204,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "apps.delete": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "appId": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
+                    }
+                ],
+                ":service_api/app.delete",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 204,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
         }
     },
     "roles": {
