@@ -18,9 +18,15 @@
                                                 "apps": [
                                                     "apps.list",
                                                     {
-                                                        ":app": ["apps.get", {}]
+                                                        ":app": [
+                                                            "apps.get", 
+                                                            {
+                                                                "access": ["apps.getAccess", {}]
+                                                            }
+                                                        ]
                                                     }
-                                                ]
+                                                ],
+                                                "access": ["projects.getAccess", {}]
                                             }
                                         ]
                                     }
@@ -44,7 +50,15 @@
                                         "projects.create",
                                         {
                                             ":project": {
-                                                "apps": ["apps.create", {}]
+                                                "apps": [
+                                                    "apps.create",
+                                                    {
+                                                        ":app": {
+                                                            "access": ["apps.grantAccess", {}]
+                                                        }
+                                                    }
+                                                ],
+                                                "access": ["projects.grantAccess", {}]
                                             }
                                         }
                                     ]
@@ -379,6 +393,49 @@
             ],
             "r": "http_server/error"
         },
+        "projects.grantAccess": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "body.target": "http://service.jillix.com/{params.username}/{params.project}"
+                    }
+                ],
+                ":service_api/access.link",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 201,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "projects.getAccess": {
+            "d": [
+                [":flow_tools/transform",
+                    {
+                        "body.target": "http://service.jillix.com/{params.username}/{params.project}",
+                        "body.role": "read"
+                    }
+                ],
+                ":service_api/access.get",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 200,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
         "apps.create": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
@@ -502,6 +559,49 @@
                     }
                 ],
                 ":service_api/app.delete",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 204,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "apps.getAccess": {
+            "d": [
+                [":flow_tools/transform",
+                    {
+                        "body.target": "http://service.jillix.com/{params.username}/{params.project}/{params.app}",
+                        "body.role": "read"
+                    }
+                ],
+                ":service_api/access.get",
+                [":flow_tools/stringify", ["_", "body"]],
+                [":http_server/send", {
+                    "send": "body",
+                    "statusCode": 200,
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/ld+json"
+                    }
+                }]
+            ],
+            "r": "http_server/error"
+        },
+        "apps.grantAccess": {
+            "d": [
+                [":http_server/concat", {"to": "body"}],
+                [":flow_tools/parse", ["body"]],
+                [":flow_tools/transform",
+                    {
+                        "body.target": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
+                    }
+                ],
+                ":service_api/access.link",
                 [":flow_tools/stringify", ["_", "body"]],
                 [":http_server/send", {
                     "send": "body",
