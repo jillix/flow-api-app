@@ -68,7 +68,7 @@
                         "router": "{req.method}"
                     }
                 ],
-                ":_api_router/route"
+                [":_api_router/route", { "end": true }]
             ]
         }
     },
