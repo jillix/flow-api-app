@@ -1,9 +1,7 @@
 {
     "server": true,
     "config": {
-        "port": 9000,
-        "session": {},
-        "ssl": {}
+        "session": {}
     },
     "flow": {
         "start": {
@@ -11,8 +9,8 @@
                 [".start", {
                     "port": 9000,
                     "ssl": {
-                        "cert": "/ssl/dev.crt",
-                        "key": "/ssl/dev.key"
+                        "cert": "ssl/dev.crt",
+                        "key": "ssl/dev.key"
                     }
                 }]
             ]
