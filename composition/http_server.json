@@ -24,7 +24,23 @@
         },
         "error": {
             "d": [
-                [":send", {"end": true, "code": 500}]
+                [
+                    ":flow_tools/transform",
+                    {
+                        "statusCode": "{code}",
+                        "error.code": "{code}",
+                        "error.message": "{message}",
+                        "error.name": "{name}"
+                    }
+                ],
+                [":flow_tools/stringify", ["error"]],
+                [":http_server/send", {
+                    "send": "error",
+                    "end": true,
+                    "headers": {
+                        "content-type": "application/json"
+                    }
+                }]
             ]
         }
     },
