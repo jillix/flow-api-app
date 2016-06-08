@@ -4,6 +4,7 @@ Service-api micro service
 **OAuth2 token endpoint**
 ----
   Grants access token using password grant type
+  [See https://tools.ietf.org/html/rfc6749#section-2.3.1](https://tools.ietf.org/html/rfc6749#section-2.3.1)
 
 * **URL**
 
