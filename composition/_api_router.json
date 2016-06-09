@@ -149,6 +149,7 @@
                     "send": "body",
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -169,6 +170,7 @@
                     "send": "data",
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -186,6 +188,7 @@
                     "statusCode": 201,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -217,6 +220,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -248,6 +252,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -279,6 +284,7 @@
                     "statusCode": 201,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -311,6 +317,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -342,6 +349,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -381,6 +389,7 @@
                     "statusCode": 201,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -412,6 +421,7 @@
                     "statusCode": 200,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -443,6 +453,7 @@
                     "statusCode": 200,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -474,6 +485,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -505,6 +517,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -540,6 +553,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -570,6 +584,7 @@
                     "statusCode": 200,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -610,6 +625,7 @@
                     "statusCode": 201,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -641,6 +657,7 @@
                     "statusCode": 200,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -673,6 +690,7 @@
                     "statusCode": 200,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -705,6 +723,7 @@
                     "statusCode": 200,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -736,6 +755,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -767,6 +787,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]
@@ -797,6 +818,7 @@
                     "statusCode": 200,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/ld+json"
                     }
                 }]
@@ -832,6 +854,7 @@
                     "statusCode": 204,
                     "end": true,
                     "headers": {
+                        "Access-Control-Allow-Origin": "https://localhost:8000",
                         "content-type": "application/json"
                     }
                 }]

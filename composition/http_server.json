@@ -36,7 +36,8 @@
                     "send": "error",
                     "end": true,
                     "headers": {
-                        "content-type": "application/json"
+                        "content-type": "application/json",
+                        "Access-Control-Allow-Origin": "https://localhost:8000"
                     }
                 }]
             ]
