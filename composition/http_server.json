@@ -28,7 +28,8 @@
                         "statusCode": "{code}",
                         "error.code": "{code}",
                         "error.message": "{message}",
-                        "error.name": "{name}"
+                        "error.name": "{name}",
+                        "error.errors": "{errors}"
                     }
                 ],
                 [":flow_tools/stringify", ["error"]],

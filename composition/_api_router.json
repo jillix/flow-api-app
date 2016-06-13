@@ -181,6 +181,11 @@
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "user.create",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 ":service_api/user.create",
                 [":flow_tools/stringify", ["_", "body"]],
                 [":http_server/send", {

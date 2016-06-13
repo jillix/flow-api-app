@@ -1,0 +1,35 @@
+{
+    "server": true,
+    "config": {
+        "schema": {
+            "user.create":{
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "email": {
+                        "type": "string",
+                        "minLength": 1,
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "verifyPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["username", "email", "password", "verifyPassword"]
+            }
+        }
+    },
+    "roles": {
+        "*": true
+    },
+    "module": "flow-schema",
+    "name": "schema_validator"
+}
