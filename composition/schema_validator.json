@@ -2,7 +2,25 @@
     "server": true,
     "config": {
         "schema": {
-            "user.create":{
+            "oauth.token": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "grant_type": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["username", "password"]
+            },
+            "user.create": {
                 "type": "object",
                 "properties": {
                     "username": {
@@ -24,6 +42,167 @@
                     }
                 },
                 "required": ["username", "email", "password", "verifyPassword"]
+            },
+            "user.updateCore": {
+                "type": "object",
+                "properties": {
+                    "givenName": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "familyName": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "address": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "worksFor": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "website": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                }
+            },
+            "user.updatePassword": {
+                "type": "object",
+                "properties": {
+                    "oldPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "newPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "confirmPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["oldPassword", "newPassword", "confirmPassword"]
+            },
+            "user.addEmail": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "minLength": 1,
+                        "format": "email"
+                    }
+                },
+                "required": ["email"]
+            },
+            "user.updateEmail": {
+                "type": "object",
+                "properties": {
+                    "primary": {
+                        "type": "boolean"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "user.delete": {
+                "type": "object",
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["password"]
+            },
+            "project.create": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["name"]
+            },
+            "project.updateCore": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                }
+            },
+            "project.delete": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["name"]
+            },
+            "project.grantAccess": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "role": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["user", "role"]
+            },
+            "app.create": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["name"]
+            },
+            "app.updateCore": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                }
+            },
+            "app.delete": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["name"]
+            },
+            "app.grantAccess": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "role": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": ["user", "role"]
             }
         }
     },

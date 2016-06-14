@@ -7,31 +7,31 @@
                 "api": {
                     "users": {
                         ":username": [
-                            "users.get",
+                            "user.get",
                             {
                                 "projects": [
-                                    "projects.list",
+                                    "project.list",
                                     {
                                         ":project": [
-                                            "projects.get", 
+                                            "project.get", 
                                             {
                                                 "apps": [
-                                                    "apps.list",
+                                                    "app.list",
                                                     {
                                                         ":app": [
-                                                            "apps.get", 
+                                                            "app.get", 
                                                             {
-                                                                "access": ["apps.getAccess", {}]
+                                                                "access": ["app.getAccess", {}]
                                                             }
                                                         ]
                                                     }
                                                 ],
-                                                "access": ["projects.getAccess", {}]
+                                                "access": ["project.getAccess", {}]
                                             }
                                         ]
                                     }
                                 ],
-                                "apps": ["apps.listAll", {}]
+                                "apps": ["app.listAll", {}]
                             }
                         ]
                     }
@@ -40,25 +40,25 @@
             "POST": {
                 "api": {
                     "users": [
-                        "users.create",
+                        "user.create",
                         {
                             ":username": [
-                                "users.get",
+                                "user.get",
                                 {
-                                    "emails": ["users.addEmail", {}],
+                                    "emails": ["user.addEmail", {}],
                                     "projects": [
-                                        "projects.create",
+                                        "project.create",
                                         {
                                             ":project": {
                                                 "apps": [
-                                                    "apps.create",
+                                                    "app.create",
                                                     {
                                                         ":app": {
-                                                            "access": ["apps.grantAccess", {}]
+                                                            "access": ["app.grantAccess", {}]
                                                         }
                                                     }
                                                 ],
-                                                "access": ["projects.grantAccess", {}]
+                                                "access": ["project.grantAccess", {}]
                                             }
                                         }
                                     ]
@@ -75,18 +75,18 @@
                 "api": {
                     "users": {
                         ":username": [
-                            "users.updateCore",
+                            "user.updateCore",
                             {
-                                "password": "users.updatePassword",
+                                "password": "user.updatePassword",
                                 "emails": {
-                                    ":emailId": "users.updateEmail"
+                                    ":emailId": "user.updateEmail"
                                 },
                                 "projects": {
                                     ":project": [
-                                        "projects.updateCore",
+                                        "project.updateCore",
                                         {
                                             "apps": {
-                                                ":app": ["apps.updateCore", {}]
+                                                ":app": ["app.updateCore", {}]
                                             }
                                         }
                                     ]
@@ -100,14 +100,14 @@
                 "api": {
                     "users": {
                         ":username": [
-                            "users.delete",
+                            "user.delete",
                             {
                                 "projects": {
                                     ":project": [
-                                        "projects.delete",
+                                        "project.delete",
                                         {
                                             "apps": {
-                                                ":app": ["apps.delete", {}]
+                                                ":app": ["app.delete", {}]
                                             }
                                         }
                                     ]
@@ -143,6 +143,11 @@
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", [["body", {"inputType": "urlencoded"}]]],
+                [":schema_validator/validate", {
+                    "schema": "oauth.token",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 ":service_api/access.token",
                 [":flow_tools/stringify", ["_", "body"]],
                 [":http_server/send", {
@@ -156,7 +161,7 @@
             ],
             "r": "http_server/error"
         },
-        "users.get":{
+        "user.get":{
             "d": [
                 ":service_api/access.auth",
                 [":flow_tools/transform",
@@ -177,7 +182,7 @@
             ],
             "r": "http_server/error"
         },
-        "users.create": {
+        "user.create": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
@@ -200,10 +205,15 @@
             ],
             "r": "http_server/error"
         },
-        "users.updateCore": {
+        "user.updateCore": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "user.updateCore",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "userId": "http://service.jillix.com/{params.username}"
@@ -232,10 +242,15 @@
             ],
             "r": "http_server/error"
         },
-        "users.updatePassword": {
+        "user.updatePassword": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "user.updatePassword",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "userId": "http://service.jillix.com/{params.username}"
@@ -264,10 +279,15 @@
             ],
             "r": "http_server/error"
         },
-        "users.addEmail": {
+        "user.addEmail": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "user.addEmail",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "userId": "http://service.jillix.com/{params.username}"
@@ -296,10 +316,15 @@
             ],
             "r": "http_server/error"
         },
-        "users.updateEmail": {
+        "user.updateEmail": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "user.updateEmail",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "username": "{params.username}",
@@ -329,10 +354,15 @@
             ],
             "r": "http_server/error"
         },
-        "users.delete": {
+        "user.delete": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "user.delete",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "userId": "http://service.jillix.com/{params.username}"
@@ -361,10 +391,15 @@
             ],
             "r": "http_server/error"
         },
-        "projects.create": {
+        "project.create": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "project.create",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "userId": "http://service.jillix.com/{params.username}"
@@ -401,7 +436,7 @@
             ],
             "r": "http_server/error"
         },
-        "projects.get": {
+        "project.get": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
@@ -433,7 +468,7 @@
             ],
             "r": "http_server/error"
         },
-        "projects.list": {
+        "project.list": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
@@ -465,10 +500,15 @@
             ],
             "r": "http_server/error"
         },
-        "projects.updateCore": {
+        "project.updateCore": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "project.updateCore",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "projectId": "http://service.jillix.com/{params.username}/{params.project}"
@@ -497,10 +537,15 @@
             ],
             "r": "http_server/error"
         },
-        "projects.delete": {
+        "project.delete": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "project.delete",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "projectId": "http://service.jillix.com/{params.username}/{params.project}"
@@ -529,10 +574,15 @@
             ],
             "r": "http_server/error"
         },
-        "projects.grantAccess": {
+        "project.grantAccess": {
             "d": [
                 [":http_server/concat", {"to": "link"}],
                 [":flow_tools/parse", ["link"]],
+                [":schema_validator/validate", {
+                    "schema": "project.grantAccess",
+                    "detailedError": true,
+                    "validate": "link"
+                }],
                 [":flow_tools/transform",
                     {
                         "link.target": "http://service.jillix.com/{params.username}/{params.project}"
@@ -565,7 +615,7 @@
             ],
             "r": "http_server/error"
         },
-        "projects.getAccess": {
+        "project.getAccess": {
             "d": [
                 [":flow_tools/transform",
                     {
@@ -596,10 +646,15 @@
             ],
             "r": "http_server/error"
         },
-        "apps.create": {
+        "app.create": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "app.create",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "userId": "http://service.jillix.com/{params.username}",
@@ -637,7 +692,7 @@
             ],
             "r": "http_server/error"
         },
-        "apps.get": {
+        "app.get": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
@@ -669,7 +724,7 @@
             ],
             "r": "http_server/error"
         },
-        "apps.list": {
+        "app.list": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
@@ -702,7 +757,7 @@
             ],
             "r": "http_server/error"
         },
-        "apps.listAll": {
+        "app.listAll": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
@@ -735,10 +790,15 @@
             ],
             "r": "http_server/error"
         },
-        "apps.updateCore": {
+        "app.updateCore": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "app.updateCore",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "appId": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
@@ -767,10 +827,15 @@
             ],
             "r": "http_server/error"
         },
-        "apps.delete": {
+        "app.delete": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
                 [":flow_tools/parse", ["body"]],
+                [":schema_validator/validate", {
+                    "schema": "app.delete",
+                    "detailedError": true,
+                    "validate": "body"
+                }],
                 [":flow_tools/transform",
                     {
                         "appId": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
@@ -799,7 +864,7 @@
             ],
             "r": "http_server/error"
         },
-        "apps.getAccess": {
+        "app.getAccess": {
             "d": [
                 [":flow_tools/transform",
                     {
@@ -830,10 +895,15 @@
             ],
             "r": "http_server/error"
         },
-        "apps.grantAccess": {
+        "app.grantAccess": {
             "d": [
                 [":http_server/concat", {"to": "link"}],
                 [":flow_tools/parse", ["link"]],
+                [":schema_validator/validate", {
+                    "schema": "app.grantAccess",
+                    "detailedError": true,
+                    "validate": "link"
+                }],
                 [":flow_tools/transform",
                     {
                         "link.target": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"

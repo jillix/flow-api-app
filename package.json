@@ -15,6 +15,7 @@
   "main": "flow",
   "scripts": {
     "preinstall": "./scripts/bash/preinstall.sh",
+    "postinstall": "flow-pack .",
     "prestart": "./scripts/bash/prestart.sh",
     "start": "flow-app . http_server/start",
     "certificates": "if [ ! -f ssl/dev.crt -o ! -f ssl/dev.key ]; then echo \"Generate the dev SSL certificates in the ssl directory ...\"; openssl req  -nodes -new -x509 -subj '/C=CH/ST=Zurich/L=Zurich/O=jillix GmbH/CN=jillix.com' -keyout ssl/dev.key -out ssl/dev.crt; fi; "
