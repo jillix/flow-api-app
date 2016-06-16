@@ -90,7 +90,7 @@ Service-api micro service
 
     `password=[string]`
 
-    `verifyPasword=[string]`
+    `confirmPassword=[string]`
 
 * **Success Response:**
 

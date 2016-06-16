@@ -20,7 +20,7 @@
                     }
                 },
                 "additionalProperties": false,
-                "required": ["username", "password"]
+                "required": ["username", "password", "grant_type"]
             },
             "user.create": {
                 "type": "object",
@@ -38,13 +38,13 @@
                         "type": "string",
                         "minLength": 1
                     },
-                    "verifyPassword": {
+                    "confirmPassword": {
                         "type": "string",
                         "minLength": 1
                     }
                 },
                 "additionalProperties": false,
-                "required": ["username", "email", "password", "verifyPassword"]
+                "required": ["username", "email", "password", "confirmPassword"]
             },
             "user.updateCore": {
                 "type": "object",

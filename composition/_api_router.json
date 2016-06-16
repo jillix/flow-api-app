@@ -166,13 +166,13 @@
                 ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
-                        "data.username": "{params.username}"
+                        "username": "{params.username}"
                     }
                 ],
                 ":service_api/user.get",
-                [":flow_tools/stringify", ["_", "data"]],
+                [":flow_tools/stringify", ["_", "body"]],
                 [":http_server/send", {
-                    "send": "data",
+                    "send": "body",
                     "end": true,
                     "headers": {
                         "Access-Control-Allow-Origin": "https://localhost:8000",
@@ -334,7 +334,7 @@
                 ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
-                        "target": "{userId}"
+                        "target": "http://service.jillix.com/{username}"
                     }
                 ],
                 [":service_api/access.check", {
@@ -619,8 +619,7 @@
             "d": [
                 [":flow_tools/transform",
                     {
-                        "body.target": "http://service.jillix.com/{params.username}/{params.project}",
-                        "body.role": "read"
+                        "body.target": "http://service.jillix.com/{params.username}/{params.project}"
                     }
                 ],
                 ":service_api/access.auth",
@@ -763,14 +762,13 @@
                 [":flow_tools/parse", ["body"]],
                 [":flow_tools/transform",
                     {
-                        "userId": "http://service.jillix.com/{params.username}",
-                        "projectId": "http://service.jillix.com/{params.username}/{params.project}"
+                        "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
                 ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
-                        "target": "{projectId}"
+                        "target": "{userId}"
                     }
                 ],
                 [":service_api/access.check", {
@@ -868,8 +866,7 @@
             "d": [
                 [":flow_tools/transform",
                     {
-                        "body.target": "http://service.jillix.com/{params.username}/{params.project}/{params.app}",
-                        "body.role": "read"
+                        "body.target": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
                     }
                 ],
                 ":service_api/access.auth",
