@@ -7,7 +7,8 @@
     "flow-service-api": "github:jillix/flow-service-api#restful",
     "flow-tools": "github:jillix/flow-tools",
     "flow-static": "github:jillix/flow-static",
-    "flow-schema": "github:jillix/flow-schema"
+    "flow-schema": "github:jillix/flow-schema",
+    "flow-url": "github:jillix/flow-url"
   },
   "name": "service-api-app",
   "version": "0.1.0",

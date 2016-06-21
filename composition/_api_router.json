@@ -631,6 +631,10 @@
                 [":service_api/access.check", {
                     "apiName": "project.getAccess"
                 }],
+                [":url/getQsParam", {
+                    "params": "role",
+                    "target": "body"
+                }],
                 ":service_api/access.get",
                 [":flow_tools/stringify", ["_", "body"]],
                 [":http_server/send", {
@@ -877,6 +881,10 @@
                 ],
                 [":service_api/access.check", {
                     "apiName": "app.getAccess"
+                }],
+                [":url/getQsParam", {
+                    "params": "role",
+                    "target": "body"
                 }],
                 ":service_api/access.get",
                 [":flow_tools/stringify", ["_", "body"]],

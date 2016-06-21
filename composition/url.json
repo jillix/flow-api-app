@@ -1,0 +1,9 @@
+{
+    "config": {},
+    "flow": {},
+    "roles": {
+        "*": true
+    },
+    "name": "url",
+    "module": "flow-url"
+}
