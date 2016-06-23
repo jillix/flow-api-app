@@ -1,13 +1,10 @@
 {
     "server": true,
     "config": {
-        "notDefined": "__404",
+        "notDefined": "forwardToApiRouter",
         "defaultRouter": "mainRouter",
         "routers": {
             "mainRouter": {
-                "api": {
-                    ":api_name": ["forwardToApiRouter", {}, "forwardToApiRouter"]
-                },
                 "_m": {
                     ":name": "module"
                 },

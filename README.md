@@ -9,11 +9,11 @@ Service-api micro service
 
 * **URL**
 
-  /api/oauth/token
+  /oauth/token
 
 * **Method:**
 
-  `POST`
+    `POST`
   
 *  **URL Params**
 
@@ -37,7 +37,7 @@ Service-api micro service
     `Authorization=Basic c2VydmljZTpzZXJ2aWNlXzEyMzQ=`
 * **Success Response:**
 
-   **Code:** 200
+    **Code:** 200
    
     **Content:**
     
@@ -73,11 +73,11 @@ Service-api micro service
 
 * **URL**
 
-  /api/users
+    /users
 
 * **Method:**
 
-  `POST`
+    `POST`
   
 *  **URL Params**
     
@@ -94,9 +94,9 @@ Service-api micro service
 
 * **Success Response:**
 
-   **Code:** 201
+    **Code:** 201
    
-   **Content:** JSON-LD document containing the created user
+    **Content:** JSON-LD document containing the created user
    
  
 * **Error Response:**
@@ -117,15 +117,15 @@ Service-api micro service
 ----
  **User get**
 ----
-  Returns user in JSON-LD form
+    Returns user in JSON-LD form
 
 * **URL**
 
-  /api/users/:username
+    /users/:username
 
 * **Method:**
 
-  `GET`
+    `GET`
   
 *  **URL Params**
 
@@ -142,9 +142,9 @@ Service-api micro service
     `Authorization=Bearer eyJhbGci...X21BfrPguec2KECqkk`
 * **Success Response:**
 
-   **Code:** 200
+    **Code:** 200
    
-   **Content:** JSON-LD document containing the user
+    **Content:** JSON-LD document containing the user
  
 * **Error Response:**
 
@@ -176,7 +176,7 @@ Service-api micro service
 
 * **URL**
 
-    /api/users/:username
+    /users/:username
 
 * **Method:**
 
@@ -238,7 +238,7 @@ Service-api micro service
 
 * **URL**
 
-    /api/users/:username/emails
+    /users/:username/emails
 
 * **Method:**
 
@@ -301,7 +301,7 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/password
+    /users/:username/password
 
 * **Method:**
 
@@ -358,7 +358,7 @@ Service-api micro service
 
 * **URL**
 
-    /api/users/:username/emails/:emailId
+    /users/:username/emails/:emailId
 
 * **Method:**
 
@@ -367,6 +367,7 @@ Service-api micro service
 *  **URL Params**
 
     `username=[string]` - the username of the user that will be updated
+
     `emailId=[string]` - the id of the email that will be updated
 * **Data Params**
 
@@ -408,7 +409,6 @@ Service-api micro service
     }
     ``` 
 
-
 ----
  **User delete**
 ----
@@ -416,11 +416,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username
+    /users/:username
 
 * **Method:**
 
-   `DELETE`
+    `DELETE`
   
 *  **URL Params**
 
@@ -430,7 +430,7 @@ Service-api micro service
     `password=[string]` - the password of the user that will be deleted
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -470,11 +470,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects
+    /users/:username/projects
 
 * **Method:**
 
-   `POST`
+    `POST`
   
 *  **URL Params**
 
@@ -484,7 +484,7 @@ Service-api micro service
     `name=[string]` - The name of the new project
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -525,7 +525,7 @@ Service-api micro service
 
 * **URL**
 
-    /api/users/:username/projects/:projectSlug
+    /users/:username/projects/:projectSlug
 * **Method:**
 
     `GET`
@@ -540,14 +540,14 @@ Service-api micro service
 
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
     `Authorization=Bearer eyJhbGci...X21BfrPguec2KECqkk`
 * **Success Response:**
 
-   **Code:** 200
+    **Code:** 200
    
     **Content:**
     
@@ -577,8 +577,7 @@ Service-api micro service
         "message": {ERROR_MESSAGE},
         "name": {ERROR_TYPE}
     }
-    ``` 
-
+    ```
 ----
  **Project list**
 ----
@@ -586,11 +585,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects
+    /users/:username/projects
 
 * **Method:**
 
-   `GET`
+    `GET`
   
 *  **URL Params**
 
@@ -600,14 +599,14 @@ Service-api micro service
     `None`
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
     `Authorization=Bearer eyJhbGci...X21BfrPguec2KECqkk`
 * **Success Response:**
 
-   **Code:** 200
+    **Code:** 200
    
     **Content:** JSON-LD document containing user projects
  
@@ -640,11 +639,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug
+    /users/:username/projects/:projectSlug
 
 * **Method:**
 
-   `PATCH`
+    `PATCH`
   
 *  **URL Params**
 
@@ -668,7 +667,6 @@ Service-api micro service
     **Code:** 200
    
     **Content:** JSON-LD document containing the updated project
-
 
 * **Error Response:**
 
@@ -699,11 +697,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug/access
+    /users/:username/projects/:projectSlug/access
 
 * **Method:**
 
-   `POST`
+    `POST`
   
 *  **URL Params**
 
@@ -717,7 +715,7 @@ Service-api micro service
     `user=[string]` - the id of the user that will receive the access rights
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -757,11 +755,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug/access?role=:role
+    /users/:username/projects/:projectSlug/access?role=:role
 
 * **Method:**
 
-   `GET`
+    `GET`
   
 *  **URL Params**
 
@@ -775,7 +773,7 @@ Service-api micro service
     `None`
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -787,7 +785,7 @@ Service-api micro service
     **Content:** JSON-LD document containing users with access rights
 * **Error Response:**
 
-    **Code:** {HTTP_STATUS_CODE}
+     **Code:** {HTTP_STATUS_CODE}
 
     `400` - if the data provided is inccorect
 
@@ -814,11 +812,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug
+    /users/:username/projects/:projectSlug
 
 * **Method:**
 
-   `DELETE`
+    `DELETE`
   
 *  **URL Params**
 
@@ -830,7 +828,7 @@ Service-api micro service
     `name=[string]` - the name of the project that will be deleted
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -870,11 +868,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug/apps
+    /users/:username/projects/:projectSlug/apps
 
 * **Method:**
 
-   `POST`
+    `POST`
   
 *  **URL Params**
 
@@ -886,7 +884,7 @@ Service-api micro service
     `name=[string]` - The name of the new app
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -925,7 +923,7 @@ Service-api micro service
 
 * **URL**
 
-    /api/users/:username/projects/:projectSlug/apps/:appSlug
+    /users/:username/projects/:projectSlug/apps/:appSlug
 * **Method:**
 
     `GET`
@@ -942,7 +940,7 @@ Service-api micro service
 
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -981,7 +979,7 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug/apps
+    /users/:username/projects/:projectSlug/apps
 
 * **Method:**
 
@@ -998,7 +996,7 @@ Service-api micro service
     `None`
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -1038,7 +1036,7 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/apps
+   /users/:username/apps
 
 * **Method:**
 
@@ -1092,11 +1090,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug/apps/:appSlug
+    /users/:username/projects/:projectSlug/apps/:appSlug
 
 * **Method:**
 
-   `PATCH`
+    `PATCH`
   
 *  **URL Params**
 
@@ -1152,11 +1150,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug/apps/:appSlug/access
+    /users/:username/projects/:projectSlug/apps/:appSlug/access
 
 * **Method:**
 
-   `POST`
+    `POST`
   
 *  **URL Params**
 
@@ -1172,7 +1170,7 @@ Service-api micro service
     `user=[string]` - the id of the user that will receive the access rights
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     
@@ -1212,11 +1210,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug/apps/:appSlug/access
+    /users/:username/projects/:projectSlug/apps/:appSlug/access
 
 * **Method:**
 
-   `GET`
+    `GET`
   
 *  **URL Params**
 
@@ -1271,11 +1269,11 @@ Service-api micro service
 
 * **URL**
 
-   /api/users/:username/projects/:projectSlug/apps/:appSlug
+    /users/:username/projects/:projectSlug/apps/:appSlug
 
 * **Method:**
 
-   `DELETE`
+    `DELETE`
   
 *  **URL Params**
 
@@ -1289,7 +1287,7 @@ Service-api micro service
     `name=[string]` - the name of the app that will be deleted
 * **Headers**
     
-   `Authorization=Bearer {token provided by the oauth2 endpoint}`
+    `Authorization=Bearer {token provided by the oauth2 endpoint}`
 
     example:
     

@@ -4,117 +4,109 @@
         "notDefined": "__404",
         "routers": {
             "GET": {
-                "api": {
-                    "users": {
-                        ":username": [
-                            "user.get",
-                            {
-                                "projects": [
-                                    "project.list",
-                                    {
-                                        ":project": [
-                                            "project.get", 
-                                            {
-                                                "apps": [
-                                                    "app.list",
-                                                    {
-                                                        ":app": [
-                                                            "app.get", 
-                                                            {
-                                                                "access": ["app.getAccess", {}]
-                                                            }
-                                                        ]
-                                                    }
-                                                ],
-                                                "access": ["project.getAccess", {}]
-                                            }
-                                        ]
-                                    }
-                                ],
-                                "apps": ["app.listAll", {}]
-                            }
-                        ]
-                    }
+                "users": {
+                    ":username": [
+                        "user.get",
+                        {
+                            "projects": [
+                                "project.list",
+                                {
+                                    ":project": [
+                                        "project.get", 
+                                        {
+                                            "apps": [
+                                                "app.list",
+                                                {
+                                                    ":app": [
+                                                        "app.get", 
+                                                        {
+                                                            "access": ["app.getAccess", {}]
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "access": ["project.getAccess", {}]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "apps": ["app.listAll", {}]
+                        }
+                    ]
                 }
             },
             "POST": {
-                "api": {
-                    "users": [
-                        "user.create",
-                        {
-                            ":username": [
-                                "user.get",
-                                {
-                                    "emails": ["user.addEmail", {}],
-                                    "projects": [
-                                        "project.create",
-                                        {
-                                            ":project": {
-                                                "apps": [
-                                                    "app.create",
-                                                    {
-                                                        ":app": {
-                                                            "access": ["app.grantAccess", {}]
-                                                        }
+                "users": [
+                    "user.create",
+                    {
+                        ":username": [
+                            "user.get",
+                            {
+                                "emails": ["user.addEmail", {}],
+                                "projects": [
+                                    "project.create",
+                                    {
+                                        ":project": {
+                                            "apps": [
+                                                "app.create",
+                                                {
+                                                    ":app": {
+                                                        "access": ["app.grantAccess", {}]
                                                     }
-                                                ],
-                                                "access": ["project.grantAccess", {}]
-                                            }
+                                                }
+                                            ],
+                                            "access": ["project.grantAccess", {}]
                                         }
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    "oauth": {
-                        "token": ["oauth.token", {}]
+                                    }
+                                ]
+                            }
+                        ]
                     }
+                ],
+                "oauth": {
+                    "token": ["oauth.token", {}]
                 }
             },
             "PATCH": {
-                "api": {
-                    "users": {
-                        ":username": [
-                            "user.updateCore",
-                            {
-                                "password": "user.updatePassword",
-                                "emails": {
-                                    ":emailId": "user.updateEmail"
-                                },
-                                "projects": {
-                                    ":project": [
-                                        "project.updateCore",
-                                        {
-                                            "apps": {
-                                                ":app": ["app.updateCore", {}]
-                                            }
+                "users": {
+                    ":username": [
+                        "user.updateCore",
+                        {
+                            "password": "user.updatePassword",
+                            "emails": {
+                                ":emailId": "user.updateEmail"
+                            },
+                            "projects": {
+                                ":project": [
+                                    "project.updateCore",
+                                    {
+                                        "apps": {
+                                            ":app": ["app.updateCore", {}]
                                         }
-                                    ]
-                                }
+                                    }
+                                ]
                             }
-                        ]
-                    }
+                        }
+                    ]
                 }
             },
             "DELETE": {
-                "api": {
-                    "users": {
-                        ":username": [
-                            "user.delete",
-                            {
-                                "projects": {
-                                    ":project": [
-                                        "project.delete",
-                                        {
-                                            "apps": {
-                                                ":app": ["app.delete", {}]
-                                            }
+                "users": {
+                    ":username": [
+                        "user.delete",
+                        {
+                            "projects": {
+                                ":project": [
+                                    "project.delete",
+                                    {
+                                        "apps": {
+                                            ":app": ["app.delete", {}]
                                         }
-                                    ]
-                                }
+                                    }
+                                ]
                             }
-                        ]
-                    }
+                        }
+                    ]
                 }
             }
         }
