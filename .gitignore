@@ -41,3 +41,4 @@ node_modules
 .service.json
 .sass-cache
 .bundles
+config.json

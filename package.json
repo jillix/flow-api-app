@@ -3,12 +3,14 @@
     "flow-app": "github:jillix/flow-app",
     "flow-http": "github:jillix/flow-http",
     "flow-pack": "github:jillix/flow-pack",
-    "flow-router": "github:jillix/flow-router#multiple_configs",
-    "flow-service-api": "github:jillix/flow-service-api#restful",
+    "flow-router": "github:jillix/flow-router",
+    "flow-service-api": "git+ssh://git@github.com/jillix/flow-service-api",
     "flow-tools": "github:jillix/flow-tools",
     "flow-static": "github:jillix/flow-static",
     "flow-schema": "github:jillix/flow-schema",
-    "flow-url": "github:jillix/flow-url"
+    "flow-url": "github:jillix/flow-url",
+    "flow-sendgrid": "github:jillix/flow-sendgrid",
+    "flow-auth": "github:adioo/flow-auth"
   },
   "name": "service-api-app",
   "version": "0.1.0",

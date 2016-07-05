@@ -1,0 +1,8 @@
+{
+	"server": true,
+    "roles": {
+        "*": true
+    },
+    "name": "sendgrid",
+    "module": "flow-sendgrid"
+}

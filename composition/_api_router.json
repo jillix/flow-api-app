@@ -63,9 +63,7 @@
                         ]
                     }
                 ],
-                "oauth": {
-                    "token": ["oauth.token", {}]
-                }
+                "auth": ["auth", {}]
             },
             "PATCH": {
                 "users": {
@@ -131,23 +129,45 @@
                 }]
             ]
         },
-        "oauth.token": {
+        "auth": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
-                [":flow_tools/parse", [["body", {"inputType": "urlencoded"}]]],
+                [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
-                    "schema": "oauth.token",
+                    "schema": "auth",
                     "detailedError": true,
                     "validate": "body"
                 }],
-                ":service_api/access.token",
+                [":flow_tools/transform", {
+                    "email": "{body.email}"
+                }],
+                ":service_api/user.getFromEmail",
+                [":flow_tools/transform", 
+                    {
+                        "content.email": "{email}",
+                        "content.username": "{body.username}",
+                        "content.user": "{body.id}"
+                    }
+                ],
+                ":auth/token.create",
+                [":flow_tools/transform", 
+                    {
+                        "to": "{email}",
+                        "mergeVars.auth_token": "{token}",
+                        "body": "An email address has been sent with your authorization code."
+                    }
+                ],
+                [":sendgrid/send", {
+                    "template": "c0474829-964b-4e50-b4f1-91957664ab1a",
+                    "from": "contact@jillix.com"
+                }],
                 [":flow_tools/stringify", ["_", "body"]],
                 [":http_server/send", {
                     "send": "body",
                     "end": true,
                     "headers": {
                         "Access-Control-Allow-Origin": "https://localhost:8000",
-                        "content-type": "application/json"
+                        "content-type": "text/plain"
                     }
                 }]
             ],

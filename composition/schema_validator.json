@@ -3,24 +3,17 @@
     "config": {
         "allErrors": true,
         "schema": {
-            "oauth.token": {
+            "auth": {
                 "type": "object",
                 "properties": {
-                    "username": {
+                    "email": {
                         "type": "string",
-                        "minLength": 1
-                    },
-                    "password": {
-                        "type": "string",
-                        "minLength": 1
-                    },
-                    "grant_type": {
-                        "type": "string",
+                        "format": "email",
                         "minLength": 1
                     }
                 },
                 "additionalProperties": false,
-                "required": ["username", "password", "grant_type"]
+                "required": ["email"]
             },
             "user.create": {
                 "type": "object",
