@@ -159,7 +159,7 @@
                 ],
                 [":sendgrid/send", {
                     "template": "c0474829-964b-4e50-b4f1-91957664ab1a",
-                    "from": "contact@jillix.com"
+                    "from": "service@jillix.com"
                 }],
                 [":flow_tools/stringify", ["_", "body"]],
                 [":http_server/send", {
@@ -175,7 +175,17 @@
         },
         "user.get":{
             "d": [
-                ":service_api/access.auth",
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/transform",
                     {
                         "username": "{params.username}"
@@ -220,6 +230,17 @@
         "user.updateCore": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "user.updateCore",
@@ -231,7 +252,6 @@
                         "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{userId}"
@@ -257,6 +277,17 @@
         "user.updatePassword": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "user.updatePassword",
@@ -268,7 +299,6 @@
                         "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{userId}"
@@ -294,6 +324,17 @@
         "user.addEmail": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "user.addEmail",
@@ -305,7 +346,6 @@
                         "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{userId}"
@@ -331,6 +371,17 @@
         "user.updateEmail": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "user.updateEmail",
@@ -343,7 +394,6 @@
                         "emailId": "_:{params.emailId}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "http://service.jillix.com/{username}"
@@ -369,6 +419,17 @@
         "user.delete": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "user.delete",
@@ -380,7 +441,6 @@
                         "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{userId}"
@@ -406,6 +466,17 @@
         "project.create": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "project.create",
@@ -417,7 +488,6 @@
                         "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{userId}"
@@ -451,13 +521,23 @@
         "project.get": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":flow_tools/transform",
                     {
                         "projectId": "http://service.jillix.com/{params.username}/{params.project}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{projectId}"
@@ -483,13 +563,23 @@
         "project.list": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":flow_tools/transform",
                     {
                         "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{userId}"
@@ -515,6 +605,17 @@
         "project.updateCore": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "project.updateCore",
@@ -526,7 +627,6 @@
                         "projectId": "http://service.jillix.com/{params.username}/{params.project}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{projectId}"
@@ -552,6 +652,17 @@
         "project.delete": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "project.delete",
@@ -563,7 +674,6 @@
                         "projectId": "http://service.jillix.com/{params.username}/{params.project}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{projectId}"
@@ -589,6 +699,17 @@
         "project.grantAccess": {
             "d": [
                 [":http_server/concat", {"to": "link"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["link"]],
                 [":schema_validator/validate", {
                     "schema": "project.grantAccess",
@@ -600,7 +721,6 @@
                         "link.target": "http://service.jillix.com/{params.username}/{params.project}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{link.target}"
@@ -629,12 +749,22 @@
         },
         "project.getAccess": {
             "d": [
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/transform",
                     {
                         "body.target": "http://service.jillix.com/{params.username}/{params.project}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{body.target}"
@@ -664,6 +794,17 @@
         "app.create": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "app.create",
@@ -676,7 +817,6 @@
                         "projectId": "http://service.jillix.com/{params.username}/{params.project}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{projectId}"
@@ -710,13 +850,23 @@
         "app.get": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":flow_tools/transform",
                     {
                         "appId": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{appId}"
@@ -742,6 +892,17 @@
         "app.list": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":flow_tools/transform",
                     {
@@ -749,7 +910,6 @@
                         "projectId": "http://service.jillix.com/{params.username}/{params.project}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{projectId}"
@@ -775,13 +935,23 @@
         "app.listAll": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":flow_tools/transform",
                     {
                         "userId": "http://service.jillix.com/{params.username}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{userId}"
@@ -807,6 +977,17 @@
         "app.updateCore": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "app.updateCore",
@@ -818,7 +999,6 @@
                         "appId": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{appId}"
@@ -844,6 +1024,17 @@
         "app.delete": {
             "d": [
                 [":http_server/concat", {"to": "body"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["body"]],
                 [":schema_validator/validate", {
                     "schema": "app.delete",
@@ -855,7 +1046,6 @@
                         "appId": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{appId}"
@@ -880,12 +1070,22 @@
         },
         "app.getAccess": {
             "d": [
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/transform",
                     {
                         "body.target": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{body.target}"
@@ -915,6 +1115,17 @@
         "app.grantAccess": {
             "d": [
                 [":http_server/concat", {"to": "link"}],
+                [":flow_tools/transform", 
+                    {
+                        "token": "{req.headers.authorization}"
+                    }
+                ],
+                ":auth/token.validate",
+                [":flow_tools/transform", 
+                    {
+                        "user": "{content.user}"
+                    }
+                ],
                 [":flow_tools/parse", ["link"]],
                 [":schema_validator/validate", {
                     "schema": "app.grantAccess",
@@ -926,7 +1137,6 @@
                         "link.target": "http://service.jillix.com/{params.username}/{params.project}/{params.app}"
                     }
                 ],
-                ":service_api/access.auth",
                 [":flow_tools/transform",
                     {
                         "target": "{link.target}"
